@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.74.0",
+  "pnpmVersion": "6.7.1",
+  "pnpmOptions": {
+    "useWorkspaces": true
+  },
+  "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.13.0 <17.0.0",
+  "projectFolderMaxDepth": 3,
+  "gitPolicy": {
+  },
+  "repository": {
+  },
+  "eventHooks": {
+    "preRushInstall": [
+    ],
+    "postRushInstall": [],
+    "preRushBuild": [],
+    "postRushBuild": []
+  },
+  "variants": [
+  ],
+  "telemetryEnabled": false,
+  "projects": [../
+    {
+      "packageName": "networking",
+      "projectFolder": "infrastructure/networking",
+      "reviewCategory": "networking",
+      "tags": [
+        "infrastructure"
+      ]
+    },
+    {
+      "packageName": "database",
+      "projectFolder": "infrastructure/database",
+      "reviewCategory": "database",
+      "tags": [
+        "infrastructure"
+      ]
+    },
+    {
+      "packageName": "authentication",
+      "projectFolder": "infrastructure/authentication",
+      "reviewCategory": "authentication",
+      "tags": [
+        "infrastructure"
+      ]
+    },
+    {
+      "packageName": "communication",
+      "projectFolder": "infrastructure/communication",
+      "reviewCategory": "communication",
+      "tags": [
+        "infrastructure"
+      ]
+    },
+    {
+      "packageName": "frontend",
+      "projectFolder": "apps/frontend",
+      "reviewCategory": "apps",
+      "tags": [
+        "apps"
+      ]
+    },
+    {
+      "packageName": "viteapp",
+      "projectFolder": "apps/frontend/vite",
+      "reviewCategory": "apps",
+      "tags": [
+        "apps"
+      ]
+    },
+    {
+      "packageName": "backend",
+      "projectFolder": "apps/backend",
+      "reviewCategory": "apps",
+      "tags": [
+        "apps"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+check_code_change: pnpm
+
+before_compile:
+  - n 14.19
+  - npm install -g @microsoft/rush@5
+
+compile:
+  - rush install

@@ -1,0 +1,33 @@
+{
+  "name": "communication",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "sst start",
+    "build": "sst build",
+    "deploy": "sst deploy --stage=production",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "2.24.0",
+    "@serverless-stack/cli": "^1.2.26",
+    "@serverless-stack/resources": "^1.2.26",
+    "typescript": "^4.7.4",
+    "@tsconfig/node16": "^1.0.3",
+    "vitest": "^0.15.1"
+  },
+  "workspaces": [
+    "api"
+  ],
+  "dependencies": {
+    "@types/node": "~18.0.0",
+    "@seeebiii/ses-verify-identities": "~4.0.5",
+    "fs-extra": "~10.1.0",
+    "chalk": "~5.0.1",
+    "@serverless-stack/core": "~1.2.26",
+    "@seeebiii/ses-email-forwarding": "~4.0.4"
+  }
+}

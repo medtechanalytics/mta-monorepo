@@ -1,0 +1,26 @@
+type User {
+    id: ID
+    name: String!
+    email: String!
+    preferences: AWSJSON
+}
+
+input UserInput {
+    email: String
+    name: String
+    preferences: AWSJSON
+}
+
+type Query {
+    getUsers: [User!]
+    getUser(id: ID): User
+}
+
+type Mutation {
+    createUser(input: UserInput): User
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
