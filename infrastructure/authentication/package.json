@@ -26,6 +26,7 @@
     "@types/node": "~18.0.0",
     "fs-extra": "~10.1.0",
     "chalk": "~5.0.1",
-    "@serverless-stack/core": "~1.2.26"
+    "@serverless-stack/core": "~1.2.26",
+    "@types/styled-jsx": "~3.4.4"
   }
 }

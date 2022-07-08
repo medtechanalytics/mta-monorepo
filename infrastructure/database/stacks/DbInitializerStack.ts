@@ -14,7 +14,7 @@ export function DbInitializerStack({ stack, app }: StackContext) {
       defaults: {
         function: {
           logRetention: RetentionDays.TWO_WEEKS,
-          timeout: 20,
+          timeout: 60,
           runtime: "nodejs14.x",
           memorySize: 512,
           permissions: ["secretsmanager"],
