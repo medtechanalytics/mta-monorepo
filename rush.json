@@ -21,7 +21,7 @@
   "variants": [
   ],
   "telemetryEnabled": false,
-  "projects": [../
+  "projects": [
     {
       "packageName": "networking",
       "projectFolder": "infrastructure/networking",
