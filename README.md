@@ -42,16 +42,16 @@ We use [aws-vault](https://github.com/99designs/aws-vault) to deploy and debug t
 You can deploy stages into different accounts, e.g.
 
 ```bash
-$ aws-vault exec dev-account -- npx sst deploy --stage=dev
-$ aws-vault exec qa-account -- npx sst deploy --stage=qa
-$ aws-vault exec prod-account -- npx sst deploy --stage=production
+$ aws-vault exec dev-account -- rushx deploy --stage=dev
+$ aws-vault exec qa-account -- rushx deploy --stage=qa
+$ aws-vault exec prod-account -- rushx deploy --stage=production
 ```
 
 and also create developer specific stacks in the same account.
 
 ```bash
-$ aws-vault exec dev-account -- npx sst deploy --stage=barak # Developer specific stack
-$ aws-vault exec dev-account -- npx sst deploy --stage=guy # Developer specific stack
+$ aws-vault exec dev-account -- rushx deploy --stage=barak # Developer specific stack
+$ aws-vault exec dev-account -- rushx deploy --stage=guy # Developer specific stack
 ```
 
 Our [networking](infrastructure/networking/README.md) and
