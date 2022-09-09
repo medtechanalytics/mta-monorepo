@@ -1,5 +1,4 @@
 import { Script, StackContext, use } from "@serverless-stack/resources";
-import { RetentionDays } from "aws-cdk-lib/aws-logs"
 import { aws_ec2 as ec2 } from "aws-cdk-lib"
 import { DependencyStack } from "./DependencyStack"
 
@@ -11,18 +10,20 @@ export function DbMigratorStack({ stack, app }: StackContext) {
 
   new Script(stack, "MigrationScript", {
       onCreate: {
-        handler: 'src/dbMigrator/index.handler',
+        handler: 'dbMigrator/index.handler',
+        srcPath: 'src',
         timeout: 60,
         functionName: app.logicalPrefixedName('migration-on-create')
       },
       onUpdate: {
-        handler: 'src/dbMigrator/index.handler',
+        handler: 'dbMigrator/index.handler',
+        srcPath: 'src',
         timeout: 60,
         functionName: app.logicalPrefixedName('migration-on-update')
       },
       defaults: {
         function: {
-          logRetention: RetentionDays.TWO_WEEKS,
+          logRetention: "two_weeks",
           runtime: "nodejs14.x",
           memorySize: 1024,
           timeout: 900,

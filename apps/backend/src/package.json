@@ -1,0 +1,22 @@
+{
+  "name": "dbmigrator",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "aws-cdk-lib": "2.32.0",
+    "@serverless-stack/cli": "^1.10.1",
+    "@serverless-stack/resources": "^1.10.1",
+    "typescript": "^4.7.4",
+    "@tsconfig/node16": "^1.0.3",
+    "vitest": "^0.15.2",
+    "@types/node": "~18.0.0",
+    "fs-extra": "~10.1.0",
+    "chalk": "~5.0.1",
+    "@serverless-stack/core": "^1.10.1",
+    "aws-sdk": "~2.1206.0",
+    "kysely": "~0.21.5",
+    "kysely-data-api": "~0.1.2",
+    "@aws-sdk/client-rds-data": "~3.161.0"
+  }
+}
