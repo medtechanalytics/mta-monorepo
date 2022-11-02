@@ -7,7 +7,7 @@ This monorepo full-stack serverless application uses these frameworks and utilit
   environment
 - [rush](https://rushjs.io/): a scalable monorepo manager for the web
 - [pnpm](https://pnpm.io/): Fast, disk space efficient package manager
-- [kysely](https://github.com/koskimas/kysely): A type-safe and autocompletion-friendly typescript SQL query builder
+- [knex](https://knexjs.org/): A type-safe and autocompletion-friendly typescript SQL query builder
 - [react](https://reactjs.org/): A JavaScript library for building user interfaces
 - [mui](https://mui.com/): Comprehensive suite of UI tools for React
 - [vite](https://vitejs.dev/): Next generation front end tooling

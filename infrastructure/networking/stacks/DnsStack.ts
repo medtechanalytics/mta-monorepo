@@ -1,5 +1,5 @@
 import { StackContext } from "@serverless-stack/resources";
-import { Duration, Tags, Fn, aws_route53 as route53 } from "aws-cdk-lib";
+import { aws_route53 as route53, Duration, Fn, Tags } from "aws-cdk-lib";
 import fs from 'fs';
 
 export function DnsStack({ stack, app }: StackContext) {
