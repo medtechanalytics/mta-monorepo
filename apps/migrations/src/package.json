@@ -1,0 +1,10 @@
+{
+  "name": "dbmigrator",
+  "version": "0.0.1",
+  "dependencies": {
+    "knex": "^2.3.0",
+    "@aws-sdk/client-secrets-manager": "^3.181.0",
+    "pg": "~8.8.0",
+    "dotenv": "^16.0.3"
+  }
+}

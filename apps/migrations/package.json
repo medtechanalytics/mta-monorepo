@@ -1,0 +1,50 @@
+{
+  "name": "migrations",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "sst start",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "knex-migrate-qa": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest dotenv_config_path=.env.qa-migration.local",
+    "knex-rollback-qa": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback dotenv_config_path=.env.qa-migration.local",
+    "knex-seed-qa": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run dotenv_config_path=.env.qa-migration.local",
+    "knex-seed-production": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run dotenv_config_path=.env.production-migration.local",
+    "create-migration": "./node_modules/knex/bin/cli.js migrate:make --migrations-directory src/migrations",
+    "migrate-qa": "ts-node -r dotenv/config ./src/run-migrate.ts dotenv_config_path=.env.qa-migration.local",
+    "create-syllabi-qa": "ts-node -r dotenv/config ./src/create-syllabi.ts dotenv_config_path=.env.qa-migration.local",
+    "create-syllabi-production": "ts-node -r dotenv/config ./src/create-syllabi.ts dotenv_config_path=.env.production-migration.local"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "2.39.1",
+    "@serverless-stack/cli": "1.15.10",
+    "@serverless-stack/resources": "1.15.10",
+    "@serverless-stack/core": "1.15.10",
+    "typescript": "4.8.4",
+    "@tsconfig/node16": "^1.0.3",
+    "vitest": "^0.15.2",
+    "@types/node": "~18.8.5",
+    "fs-extra": "~10.1.0",
+    "chalk": "~5.1.0",
+    "aws-sdk": "~2.1231.0",
+    "@aws-sdk/client-rds-data": "~3.161.0",
+    "ts-node": "~10.9.1",
+    "dotenv": "~16.0.3",
+    "esbuild": "~0.15.10",
+    "@anatine/esbuild-decorators": "~0.2.19",
+    "@aws-cdk/aws-appsync-alpha": "2.39.1-alpha.0",
+    "lodash": "~4.17.21",
+    "@types/lodash": "~4.14.186",
+    "knex": "~2.3.0",
+    "pg": "~8.8.0",
+    "@types/pg": "~8.6.5",
+    "@aws-sdk/client-secrets-manager": "^3.186.0"
+  },
+  "workspaces": [
+    "backend"
+  ]
+}

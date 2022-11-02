@@ -85,6 +85,22 @@
       "tags": [
         "apps"
       ]
+    },
+    {
+      "packageName": "migrations",
+      "projectFolder": "apps/migrations",
+      "reviewCategory": "apps",
+      "tags": [
+        "apps"
+      ]
+    },
+    {
+      "packageName": "dbmigrator",
+      "projectFolder": "apps/migrations/src",
+      "reviewCategory": "backend",
+      "tags": [
+        "backend"
+      ]
     }
   ]
 }
