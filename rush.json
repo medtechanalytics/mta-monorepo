@@ -55,6 +55,14 @@
       ]
     },
     {
+      "packageName": "storage",
+      "projectFolder": "infrastructure/storage",
+      "reviewCategory": "storage",
+      "tags": [
+        "infrastructure"
+      ]
+    },
+    {
       "packageName": "frontend",
       "projectFolder": "apps/frontend",
       "reviewCategory": "apps",
