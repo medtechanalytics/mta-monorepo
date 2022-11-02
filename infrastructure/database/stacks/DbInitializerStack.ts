@@ -1,5 +1,4 @@
 import { dependsOn, Script, StackContext, use } from "@serverless-stack/resources";
-import { RetentionDays } from "aws-cdk-lib/aws-logs"
 import { aws_ec2 as ec2 } from "aws-cdk-lib"
 import { DependencyStack } from "./DependencyStack"
 import { RdsStack } from "./RdsStack"
@@ -13,7 +12,7 @@ export function DbInitializerStack({ stack, app }: StackContext) {
   new Script(stack, "DbInitializerScript", {
       defaults: {
         function: {
-          logRetention: RetentionDays.TWO_WEEKS,
+          logRetention: "two_weeks",
           timeout: 60,
           runtime: "nodejs14.x",
           memorySize: 512,

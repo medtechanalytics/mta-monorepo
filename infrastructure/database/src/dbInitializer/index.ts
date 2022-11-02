@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, Client } from 'pg';
 import * as AWS from 'aws-sdk';
 import _ from 'lodash';
 import crypto from 'crypto';
@@ -48,7 +48,7 @@ exports.handler = async ({ params }: ScriptParams) => {
       user: secretParams.username,
       password: secretParams.password,
       host: secretParams.host,
-      database: secretParams.dbname,
+      database: secretParams.dbname || 'postgres',
       port: secretParams.port as number,
       ssl: true
     });
@@ -105,7 +105,26 @@ exports.handler = async ({ params }: ScriptParams) => {
     throw e
   }
   finally {
-    pgClient.release()
+    await pgClient.release()
+  }
+
+  const secondaryPgClient = new Client({
+    user: secretParams.username,
+    password: secretParams.password,
+    host: secretParams.host,
+    database: dbName,
+    port: secretParams.port as number,
+    ssl: true
+  });
+  try {
+    await secondaryPgClient.connect();
+    await secondaryPgClient.query(`CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;`)
+  }
+  catch (e) {
+    throw e
+  }
+  finally {
+    await secondaryPgClient.end()
   }
 
   return {

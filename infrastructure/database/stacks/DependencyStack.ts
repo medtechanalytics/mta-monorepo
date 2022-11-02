@@ -13,9 +13,9 @@ export function DependencyStack({ stack, app }: StackContext) {
     domainName: zoneName
   })
 
-  const rdsClusterName = `${process.env.DB_STAGE || app.stage}-${process.env.APP_NAME}`
+  const rdsClusterName = `${process.env.DB_STAGE || app.stage}-${process.env.APP_NAME || 'db'}`
   const rdsSecretName = `${process.env.DB_STAGE || app.stage}/rds/${rdsClusterName}`
-  const dbName = `${process.env.APP_NAME}_${app.stage}`
+  const dbName = `${(process.env.APP_NAME || '').replace(/-/g,'')}_${app.stage}`
   const dbSecretName = `${app.stage}/db/${dbName}`;
 
   return { vpc, hostedZone, rdsClusterName, rdsSecretName, dbName, dbSecretName };

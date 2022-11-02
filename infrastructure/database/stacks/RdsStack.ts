@@ -1,12 +1,11 @@
 import { RDS, StackContext, use } from "@serverless-stack/resources";
 import { DependencyStack } from "./DependencyStack"
-import { Duration, aws_ec2 as ec2, aws_rds as rds, aws_kms as kms, aws_route53 as route53 } from "aws-cdk-lib"
+import { aws_ec2 as ec2, aws_kms as kms, aws_rds as rds, aws_route53 as route53, Duration } from "aws-cdk-lib"
 
 export function RdsStack({ stack, app }: StackContext) {
-  const { vpc, hostedZone } = use(DependencyStack)
+  const { vpc, hostedZone, rdsClusterName, rdsSecretName } = use(DependencyStack)
 
-  const clusterIdentifier = `${app.stage}-${process.env.APP_NAME || 'db'}`;
-  const clusterSecretName = `${app.stage}/rds/${clusterIdentifier}`;
+  const POSTGRES_PORT = 5432;
 
   const config: any = {
     autoPause: true,
@@ -36,7 +35,7 @@ export function RdsStack({ stack, app }: StackContext) {
   });
 
   const credentials = new rds.DatabaseSecret(stack, 'dbCredentials', {
-    secretName: clusterSecretName,
+    secretName: rdsSecretName,
     username: `${process.env.APP_NAME}admin`
   });
 
