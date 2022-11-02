@@ -6,6 +6,7 @@ type User {
 }
 
 input UserInput {
+    id: ID
     email: String
     name: String
     preferences: AWSJSON
@@ -13,7 +14,7 @@ input UserInput {
 
 type Query {
     getUsers: [User!]
-    getUser(id: ID): User
+    getUser(input: UserInput): User
 }
 
 type Mutation {

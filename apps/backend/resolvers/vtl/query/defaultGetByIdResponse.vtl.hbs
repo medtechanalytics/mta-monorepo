@@ -1,0 +1,5 @@
+#if( $context.result.rowCount > 0)
+  $util.toJson($context.result.rows[0])
+#else
+  $util.error("No {{ tableName }} found for id=$context.arguments.id")
+#end

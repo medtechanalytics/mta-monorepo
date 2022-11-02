@@ -1,0 +1,10 @@
+{
+  "version" : "2017-02-28",
+  "operation": "Invoke",
+  "payload": {
+    "sql": "SELECT * FROM \"{{ tableName }}\" WHERE id = :ID;",
+    "variableMapping": {
+        "ID": "$context.arguments.id"
+    }
+  }
+}

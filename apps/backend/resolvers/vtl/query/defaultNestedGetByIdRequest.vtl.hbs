@@ -1,0 +1,21 @@
+#if( $context.source.{{ resolvedKey }})
+    #return($context.source.{{ resolvedKey }})
+#end
+#if( $util.isNull($context.source.{{ tableName }}.id) )
+    #if( $util.isNull($context.source.{{ foreignKey }}) )
+        #return
+    #end
+  #set( ${{ foreignKey }} = $context.source.{{ foreignKey }} )
+#else
+  #set( ${{ foreignKey }} = $context.source.{{ tableName }}.id )
+#end
+{
+  "version" : "2017-02-28",
+  "operation": "Invoke",
+  "payload": {
+    "sql": "SELECT * FROM \"{{ tableName }}\" WHERE {{ idColumn }} = :ID;",
+    "variableMapping": {
+        "ID": "${{ foreignKey }}"
+    }
+  }
+}

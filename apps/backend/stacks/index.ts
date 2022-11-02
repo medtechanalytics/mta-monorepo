@@ -1,7 +1,7 @@
 import { App } from "@serverless-stack/resources";
 import { AppsyncStack } from "./AppsyncStack";
-import { DbMigratorStack } from "./DbMigratorStack"
 import { DependencyStack } from "./DependencyStack"
+import { ResolversStack } from "./ResolversStack"
 
 export default function (app: App) {
   app.setDefaultFunctionProps({
@@ -11,6 +11,6 @@ export default function (app: App) {
     },
   });
   app.stack(DependencyStack)
-    .stack(DbMigratorStack)
-    .stack(AppsyncStack);
+    .stack(AppsyncStack)
+    .stack(ResolversStack);
 }

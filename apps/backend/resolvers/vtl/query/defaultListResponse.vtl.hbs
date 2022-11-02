@@ -1,0 +1,5 @@
+#if( $context.result.rowCount > 0)
+  $util.toJson($context.result.rows)
+#else
+  []
+#end
