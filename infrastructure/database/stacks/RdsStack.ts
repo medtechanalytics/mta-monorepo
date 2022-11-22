@@ -1,17 +1,19 @@
 import { RDS, StackContext, use } from "@serverless-stack/resources";
 import { DependencyStack } from "./DependencyStack"
-import { aws_ec2 as ec2, aws_kms as kms, aws_rds as rds, aws_route53 as route53, Duration } from "aws-cdk-lib"
+import {
+  Duration,
+  aws_ec2 as ec2,
+  aws_rds as rds,
+  aws_kms as kms,
+  aws_route53 as route53,
+  Aspects,
+} from "aws-cdk-lib"
+import { CfnDBCluster } from "aws-cdk-lib/aws-rds"
 
 export function RdsStack({ stack, app }: StackContext) {
   const { vpc, hostedZone, rdsClusterName, rdsSecretName } = use(DependencyStack)
 
   const POSTGRES_PORT = 5432;
-
-  const config: any = {
-    autoPause: true,
-    minCapacity: "ACU_2",
-    maxCapacity: "ACU_2",
-  };
 
   const storageEncryptionKey = new kms.Key(stack, 'dbKey', {
     enableKeyRotation: true
@@ -22,50 +24,61 @@ export function RdsStack({ stack, app }: StackContext) {
     vpc,
     securityGroupName: `${process.env.APP_NAME}-${app.stage}-rds`
   })
+  sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(POSTGRES_PORT), 'RDS Ingress')
 
-  const serverlessV1Engine = rds.DatabaseClusterEngine.auroraPostgres({
-    version: rds.AuroraPostgresEngineVersion.of('10.4', '10')
+  const engine = rds.DatabaseClusterEngine.auroraPostgres({
+    version: rds.AuroraPostgresEngineVersion.VER_14_4,
   })
 
-  const parameterGroup = new rds.ParameterGroup(stack, 'dbParameterGroup', {
-    engine: serverlessV1Engine,
-    parameters: {
-      'rds.force_ssl': '1'
-    }
-  });
+  const parameterGroup = new rds.ParameterGroup(stack, "serverlessParameterGroup", {
+    engine,
+    description: `serverless v2 parameter group ${app.stage}`
+  })
 
-  const credentials = new rds.DatabaseSecret(stack, 'dbCredentials', {
-    secretName: rdsSecretName,
-    username: `${process.env.APP_NAME}admin`
-  });
+  const dbCluster = new rds.DatabaseCluster(stack, 'ServerlessDbCluster', {
+    engine,
+    credentials: {
+      username: `${process.env.APP_NAME}_admin`,
+      secretName: rdsSecretName,
+    },
+    storageEncrypted: true,
+    storageEncryptionKey,
+    clusterIdentifier: rdsClusterName,
+    parameterGroup,
+    deletionProtection: true,
+    backup: {
+      retention: Duration.days(7)
+    },
+    instances: 1,
+    instanceProps: {
+      vpc,
+      instanceType: new ec2.InstanceType('serverless'),
+      autoMinorVersionUpgrade: true,
+      publiclyAccessible: false,
+      securityGroups: [sg],
+      vpcSubnets: vpc.selectSubnets({
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      }),
+      enablePerformanceInsights: true
+    },
+    port: POSTGRES_PORT
+  })
 
-  const db = new RDS(stack, "Database", {
-    engine: "postgresql10.14",
-    defaultDatabaseName: process.env.DB_NAME || 'default',
-    scaling: config,
-    cdk: {
-      cluster: {
-        credentials: rds.Credentials.fromSecret(credentials),
-        parameterGroup,
-        vpc,
-        vpcSubnets: {
-          subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
-
-        },
-        storageEncryptionKey,
-        clusterIdentifier,
-        enableDataApi: true,
-        backupRetention: Duration.days(7),
-        securityGroups: [sg]
+  Aspects.of(dbCluster).add({
+    visit(node) {
+      if (node instanceof CfnDBCluster) {
+        node.serverlessV2ScalingConfiguration = {
+          minCapacity: 0.5,
+          maxCapacity: 8,
+        }
       }
     },
-  });
-  sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(db.clusterEndpoint.port), 'RDS Ingress')
-
-  new route53.CnameRecord(stack, 'dbCname', {
-    zone: hostedZone,
-    recordName: 'db',
-    domainName: db.clusterEndpoint.hostname
   })
+
+  // new route53.CnameRecord(stack, 'dbCname', {
+  //   zone: hostedZone,
+  //   recordName: 'db',
+  //   domainName: db.clusterEndpoint.hostname
+  // })
 
 }
